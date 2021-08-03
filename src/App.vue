@@ -12,6 +12,10 @@
     <app-alert :user="user" />
 
     <button type="button" ref="btn">Button</button>
+
+    <hr />
+    <p>{{ count }}</p>
+    <button type="button" @click="increment2()">Button</button>
   </div>
 </template>
 
@@ -20,6 +24,7 @@ import { ref, reactive, toRefs, onBeforeMount, onMounted } from 'vue';
 import AppAlert from '@/components/Alert.vue';
 import { useNumber } from '@/hooks/number';
 import { usePhrase } from '@/hooks/phrase';
+import global from './state/global';
 
 export default {
   name: 'App',
@@ -50,6 +55,8 @@ export default {
       user.name = 'Luis';
     }, 3000);
 
+    const { state, increment2 } = global;
+
     const { num, increment, double } = useNumber();
     const { phrase, reversedPhrase, num: phraseNum } = usePhrase();
 
@@ -63,6 +70,8 @@ export default {
       user,
       btn,
       phraseNum,
+      ...toRefs(state),
+      increment2,
     };
   },
 };
